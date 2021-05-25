@@ -14,10 +14,6 @@ def start_server():
     while True:
         client_socket, address = sock.accept()
         print("Connected", address)
-        # data = client_socket.recv(1024).decode('utf-8')
-        # connect = load_page(data)
-        # client_socket.send(connect)
-        # client_socket.shutdown(socket.SHUT_WR)
         tServer = threading.Thread(target=get_data, args=(client_socket,))
         tServer.start()
 
@@ -25,12 +21,13 @@ def start_server():
 def get_data(client_socket):
     # data = 1
     # while data:
-        data = client_socket.recv(1024).decode('utf-8')
-        # print(data)
-        if data:
-            connect = load_page(data)
-            client_socket.send(connect)
-        client_socket.shutdown(socket.SHUT_WR)
+    data = client_socket.recv(1024).decode('utf-8')
+    # print(data)
+    if data:
+        connect = load_page(data)
+        client_socket.send(connect)
+    client_socket.shutdown(socket.SHUT_WR)
+
 
 def load_page(request_data):
     global old_path
@@ -43,6 +40,7 @@ def load_page(request_data):
             path = "/index.html"
     else:
         path = old_path
+    print(f' URL: {path}')
 
     response = ''
     try:
