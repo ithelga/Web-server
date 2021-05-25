@@ -23,14 +23,14 @@ def start_server():
 
 
 def get_data(client_socket):
-    data = 1
-    while data:
+    # data = 1
+    # while data:
         data = client_socket.recv(1024).decode('utf-8')
         # print(data)
         if data:
             connect = load_page(data)
             client_socket.send(connect)
-    # client_socket.shutdown(socket.SHUT_WR)
+        client_socket.shutdown(socket.SHUT_WR)
 
 def load_page(request_data):
     global old_path
